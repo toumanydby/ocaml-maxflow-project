@@ -2,7 +2,7 @@
 
 src?=0
 dst?=5
-graph?=graph1.txt
+graph?=mongraph.txt
 
 all: build
 
@@ -19,9 +19,9 @@ edit:
 
 demo: build
 	@echo "\n   ⚡  EXECUTING  ⚡\n"
-	./ftest.exe graphs/${graph} $(src) $(dst) outfile
+	./ftest.exe graphs/${graph} $(src) $(dst) outfile.txt
 	@echo "\n   🥁  RESULT (content of outfile)  🥁\n"
-	@cat outfile
+	@cat outfile.txt
 
 clean:
 	find -L . -name "*~" -delete

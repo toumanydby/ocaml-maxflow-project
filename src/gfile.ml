@@ -19,7 +19,6 @@ type path = string
 (* Compute arbitrary position for a node. Center is 300,300 *)
 let iof = int_of_float
 let foi = float_of_int
-
 let index_i id = iof (sqrt (foi id *. 1.1))
 
 let compute_x id = 20 + 180 * index_i id
@@ -51,6 +50,20 @@ let write_file path graph =
   
   close_out ff ;
   ()
+
+
+let export path (gr: string graph ) =
+  let dot_file = open_out path in 
+   fprintf dot_file "digraph finite_state_machine {\n\tfontname=\"Helvetica,Arial,sans-serif\"
+    \n\tnode [fontname=\"Helvetica,Arial,sans-serif\"]
+    \n\tedge [fontname=\"Helvetica,Arial,sans-serif\"]
+    \n\trankdir=LR;
+    \n\tnode [shape = circle];";
+
+    let () = e_iter gr (fun arc -> fprintf dot_file "\n\t%d -> %d [label = \"%s\"];" arc.src arc.tgt arc.lbl) in
+  
+    fprintf dot_file "\n}\n";
+    ()
 
 (* Reads a line with a node. *)
 let read_node graph line =
