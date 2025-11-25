@@ -19,9 +19,13 @@ edit:
 
 demo: build
 	@echo "\n   ⚡  EXECUTING  ⚡\n"
-	./ftest.exe graphs/${graph} $(src) $(dst) outfile.txt
+	./ftest.exe graphs/${graph} $(src) $(dst) outfile.txt outfiledot.txt
 	@echo "\n   🥁  RESULT (content of outfile)  🥁\n"
 	@cat outfile.txt
+
+svg: build
+	./ftest.exe graphs/${graph} $(src) $(dst) outfile.txt outfiledot.txt
+	dot -Tsvg ./outfiledot.txt > outfiledot.svg
 
 clean:
 	find -L . -name "*~" -delete

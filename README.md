@@ -20,3 +20,12 @@ A [`Makefile`](Makefile) provides some useful commands:
 
 In case of trouble with the VSCode extension (e.g. the project does not build, there are strange mistakes), a common workaround is to (1) close vscode, (2) `make clean`, (3) `make build` and (4) reopen vscode (`make edit`).
 
+## NOTES
+
+On doit implementer l'algo max-flot sur un graph de flot en utilisant l'algo de Ford-Fulkerson, et optionnellement l'ameliorer pour qu'il prenne en compte d'autres contraintes (ex: minimiser le cout)
+
+Nos graphes sont immuables !!! On ne peut pas les modifier, donc quand on veut ajouter un arc ou un noeud a un graphe existant, on cree un nouveau graphe avec toutes ces informations.
+
+graph.mli et graph.ml represente les fichiers du module Graph
+gfile.mli et gfile.ml represente les fichiers du module Gfile
+ftest.ml est le main de notre program. 

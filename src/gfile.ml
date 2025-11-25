@@ -52,17 +52,18 @@ let write_file path graph =
   ()
 
 
-let export path (gr: string graph ) =
+let export path gr =
   let dot_file = open_out path in 
    fprintf dot_file "digraph finite_state_machine {\n\tfontname=\"Helvetica,Arial,sans-serif\"
-    \n\tnode [fontname=\"Helvetica,Arial,sans-serif\"]
-    \n\tedge [fontname=\"Helvetica,Arial,sans-serif\"]
-    \n\trankdir=LR;
-    \n\tnode [shape = circle];";
-
+    node [fontname=\"Helvetica,Arial,sans-serif\"]
+    edge [fontname=\"Helvetica,Arial,sans-serif\"]
+    rankdir=LR;
+    node [shape = circle];";
     let () = e_iter gr (fun arc -> fprintf dot_file "\n\t%d -> %d [label = \"%s\"];" arc.src arc.tgt arc.lbl) in
   
     fprintf dot_file "\n}\n";
+
+    close_out dot_file;
     ()
 
 (* Reads a line with a node. *)
