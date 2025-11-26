@@ -1,5 +1,6 @@
 open Gfile
 open Tools
+open Algo
 
 let () =
 
@@ -33,10 +34,13 @@ let () =
   (* test of clone_nodes *)
   (* let graph2 = clone_nodes graph in  *)
   (* test ajout d'un arc *)
-  let graph3 = add_arc (gmap graph int_of_string) 0 2 10 in
+  (* let graph3 = add_arc (gmap graph int_of_string) 0 2 10 in *)
   let graph4 = gmap graph3 string_of_int in
+
+  let path = find_path graph3 [] 0 4 in 
+  (* Une liste d'entier a afficher string.concat dans le module string*)
   (* Rewrite the graph that has been read. *)
-  let () = export outfiledot graph4 in
+  (* let () = export outfiledot graph4 in *)
   let () = write_file outfile graph4 in
   ()
 
