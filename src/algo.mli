@@ -1,3 +1,5 @@
+open Graph
+
 (* A path is a list of nodes. *)
 type path = id list
 
@@ -7,4 +9,5 @@ type path = id list
  *
  *  forbidden is a list of forbidden nodes (they have already been visited)
  *)
-find_path: int graph -> id list -> id -> id -> path option
+val find_path: int graph -> id list -> id -> id -> path option
+val string_of_path: path option -> string

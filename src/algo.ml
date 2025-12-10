@@ -5,7 +5,6 @@ type path = id list
 
 (* On doit utiliser loopNodes dans loopEdges sinon on risque de rater certain chemin
 dans notre parcours *)
-(* NON FONCTIONNEL !!!! *)
 let find_path graph forbidden id1 id2 =
   (* on verifie si id1 et id2 existent dans le graphe *)
   if node_exists graph id1 && node_exists graph id2 then
@@ -14,29 +13,36 @@ let find_path graph forbidden id1 id2 =
       match arcs with
       | [] -> None
       | h :: tail ->
-        if h.tgt = dest then
-          Some (path @ [h.tgt])
-        else
-          (* iCI PAS BON MON GARS *)
+        let next = h.tgt in
+        if next = dest then
+          Some (List.rev(next::path))
+        else if List.mem next forbid then
           loopEdges tail forbid src dest path
+        else 
+          (* On continue sur le prochain noeud *)
+          match loopNodes graph (next::forbid) next dest (next::path) with
+          | None -> loopEdges tail forbid src dest path
+          | Some p -> Some p
 
     (* On boucle sur les noeuds *)
     and loopNodes gr forbid src dest path =
       let arcList = out_arcs gr src in
       match arcList with
       | [] -> None
-      | arc :: tail -> 
-        if List.mem arc.src forbid then
-          loopEdges tail forbid src dest path
-        else
-          let forbid = arc.src::forbidden in
-          let path2 = arc.src::path in 
-          match loopEdges arcList forbid arc.src dest path2 with
-          | None -> None
-          | Some p -> Some p
+      (* on marque src visité et on explore ses arcs *)
+      | _ -> loopEdges arcList (src::forbid) src dest path
     in
 
+    (* on démarre avec id1 dans notre chemin *)
     loopNodes graph forbidden id1 id2 [id1]
 
   else
     None
+
+
+let string_of_path (p : path option) : string =
+  match p with
+  | None -> "No path found."
+  | Some ids ->
+      let parts = List.map string_of_int ids in
+      "Path: " ^ String.concat " -> " parts
