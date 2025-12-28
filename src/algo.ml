@@ -61,3 +61,16 @@ let path_to_arcs graph path =
     in 
     aux [] path
 
+let find_minimum_path_capacity arcs = 
+  List.fold_left (fun acc arc -> if arc.lbl < acc then arc.lbl else acc) max_int arcs
+
+let remove_negative_or_null_capacity graph = 
+  e_fold graph (fun g arc -> if arc.lbl <= 0 then g else new_arc g arc) (clone_nodes graph)
+
+let apply_capacity graph arcs capacity = 
+  let update_arcs g arc value = 
+    let g = add_arc g arc.tgt arc.src value in (* On augmente les capacites inverses *)
+    new_arc g { arc with lbl = arc.lbl - value }  (* On decremente les capacites sortantes *)
+  in
+    List.fold_left (fun g arc -> update_arcs g arc capacity) graph arcs
+

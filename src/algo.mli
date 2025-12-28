@@ -15,3 +15,12 @@ val find_path: int graph -> id list -> id -> id -> path option
 
 (* Convert a path (list of nodes) into a list of arcs *)
 val path_to_arcs: int graph -> path -> id arc list
+
+(* Find the minimum capacity along a list of arcs *)
+val find_minimum_path_capacity: id arc list -> int
+
+(* Remove arcs with non-positive capacity *)
+val remove_negative_or_null_capacity: int graph -> int graph
+
+(* Apply a flow along a list of arcs *)
+val apply_capacity: int graph -> id arc list -> int -> int graph
